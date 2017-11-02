@@ -1,0 +1,13 @@
+Triangulating Polygons
+======================
+
+Challenge:
+----------
+Attached is the puzzle to be solved in code. The challenge is to show whether a
+solution exists according to the second-last paragraph, “Can you color the
+inside dots so as to create two complete triangles and no more?”, using the
+as-drawn triangulation. The last paragraph allows different triangulations
+within the same border. That is out of scope for the challenge.
+
+Solution:
+---------
