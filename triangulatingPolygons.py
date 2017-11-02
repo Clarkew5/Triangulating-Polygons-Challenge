@@ -71,4 +71,4 @@ if (__name__ == "__main__"):
     if (len(sys.argv) == 2 and sys.argv[1] == '-t'):
         test()
     else:
-        print("incorrect output")
+        print("incorrect input")
