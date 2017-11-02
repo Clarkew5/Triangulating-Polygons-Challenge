@@ -6,6 +6,9 @@ class Vertex:
         self.colour = colour
         self.connectedVertices = connectedVertices
 
+    def changeColour(self, colour):
+        self.colour = colour
+
 def testVertexConstructors():
     print("Vertex Constuctor Tests")
 
@@ -49,8 +52,20 @@ def testVertexConstructors():
     else:
         print("FAIL")
 
+def testChangeColour():
+    A = Vertex("A")
+    A.changeColour("red")
+
+    print("Change Colour:\t\t\t", end="")
+    if (A.colour == "red"):
+        print("PASS")
+    else:
+        print("FAIL")
+
 def test():
     testVertexConstructors()
+    print()
+    testChangeColour()
 
 if (__name__ == "__main__"):
     if (len(sys.argv) == 2 and sys.argv[1] == '-t'):
