@@ -42,3 +42,11 @@ To run the solution navigate to the file and enter
 
 To run the unit tests navigate to the file and enter
     python3 triangulatingPolygons.py -t
+
+Regrets:
+--------
+I wish that I requsetd a little more time so that I could have tested more
+and generated more puzzles to properly test my solution. If I had more time
+or could start over, I would look into applying constraint value problem 
+techniques, because I believe that this challenge can be classified as a 
+constraint value problem
