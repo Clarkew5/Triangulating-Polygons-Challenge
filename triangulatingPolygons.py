@@ -50,6 +50,44 @@ def makeProperTriangles(triangle, polygon):
     triangleCombinatiotns(uncolouredVerticies, colours - coloursUsed, properTriangleList, properTriangle)
     return properTriangleList
 
+def fillTriangles(triangles, polygon):
+    if (triangles == set()):
+        return True
+    else:
+        for trinagle in triangles:
+            coloursUsed = set()
+            uncolouredVerticies = set()
+            for vertex in trinagle:
+                if (polygon[vertex].colour != "blank"):
+                    coloursUsed.add(polygon[vertex].colour)
+                else:
+                    uncolouredVerticies.add(vertex)
+            if (len(coloursUsed) == 3):
+                return False
+            for vertex in uncolouredVerticies:
+                for colour in coloursUsed:
+                    polygon[vertex].colour = colour
+            fillTriangles(triangles.remove(trinagle), polygon)
+            for vertex in uncolouredVerticies:
+                for colour in coloursUsed:
+                    polygon[vertex].colour = "blank"
+
+        return False
+
+def fillPolygon(pTri1, pTri2, otherTris, polygon):
+    copyPolygon = {}
+    for vertex in polygon:
+        copyPolygon[vertex] = polygon[vertex]
+
+    for vertex in pTri1:
+        if (copyPolygon[vertex].colour == "blank"):
+            copyPolygon[vertex].colour = pTri1[vertex]
+
+    for vertex in pTri2:
+        copyPolygon[vertex].colour = pTri2[vertex]
+
+    return fillTriangles(otherTris, copyPolygon)
+
 def triangleConflict(triangle1, triangle2):
     for vertex in triangle1:
         if (vertex in triangle2):
@@ -235,7 +273,7 @@ def main():
                 properTrianglesList2 = makeProperTriangles(triangleList[j], polygon)
                 if (properTrianglesList2 == []):
                     break
-                otherTriangles = triangleSet-(triangleList[i] | triangleList[j])
+                otherTris = triangleSet-(triangleList[i] | triangleList[j])
                 for pTri2 in properTrianglesList2:
                     if triangleConflict(pTri1, pTri2):
                         break
