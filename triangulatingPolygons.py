@@ -20,7 +20,8 @@ def findTriangles(polygon):
                     triangles.add(frozenset({vertex, connectedV, commonV}))
     return triangles
 
-def triangleCombinatiotns(uncolouredVerticies, colours, properTriangleList, properTriangle):
+def triangleCombinatiotns(uncolouredVerticies, colours, properTriangleList,\
+                          properTriangle):
     if (uncolouredVerticies == set()):
         listTriangle = {}
         for vertex in properTriangle:
@@ -31,7 +32,9 @@ def triangleCombinatiotns(uncolouredVerticies, colours, properTriangleList, prop
         for vertex in uncolouredVerticies:
             for colour in colours:
                 properTriangle[vertex] = colour
-                triangleCombinatiotns(uncolouredVerticies-{vertex}, colours-{colour}, properTriangleList, properTriangle)
+                triangleCombinatiotns(uncolouredVerticies-{vertex},\
+                                      colours-{colour}, properTriangleList,\
+                                      properTriangle)
 
 def makeProperTriangles(triangle, polygon):
     colours = {"red", "blue", "yellow"}
@@ -47,7 +50,8 @@ def makeProperTriangles(triangle, polygon):
         else:
             uncolouredVerticies.add(vertex)
 
-    triangleCombinatiotns(uncolouredVerticies, colours - coloursUsed, properTriangleList, properTriangle)
+    triangleCombinatiotns(uncolouredVerticies, colours - coloursUsed,\
+                          properTriangleList, properTriangle)
     return properTriangleList
 
 def fillTriangles(triangles, polygon):
@@ -271,7 +275,8 @@ def main():
             continue
         for pTri1 in properTrianglesList1:
             for j in range(i+1, len(triangleList)):
-                properTrianglesList2 = makeProperTriangles(triangleList[j], polygon)
+                properTrianglesList2 = makeProperTriangles(triangleList[j],\
+                                                           polygon)
                 if (properTrianglesList2 == []):
                     break
                 otherTris = triangleSet-(triangleList[i] | triangleList[j])
