@@ -9,6 +9,17 @@ class Vertex:
     def changeColour(self, colour):
         self.colour = colour
 
+def findTriangles(polygon):
+    triangles = set()
+    for vertex in polygon:
+        for connectedV in polygon[vertex].connectedVertices:
+            if (vertex in polygon[connectedV].connectedVertices):
+                verteciesInCommon = polygon[vertex].connectedVertices & \
+                                    polygon[connectedV].connectedVertices
+                for commonV in verteciesInCommon:
+                    triangles.add(frozenset({vertex, connectedV, commonV}))
+    return triangles
+
 def testVertexConstructors():
     print("Vertex Constuctor Tests")
 
@@ -62,10 +73,33 @@ def testChangeColour():
     else:
         print("FAIL")
 
+def testFindTriangles(testPolygon):
+    testTriangles = {frozenset({"A","C","D"}), frozenset({"A","B","D"}),\
+                     frozenset({"B","D","E"}), frozenset({"B","E","F"}),\
+                     frozenset({"C","D","G"}), frozenset({"D","E","G"}),\
+                     frozenset({"E","G","H"}), frozenset({"E","F","H"})}
+    print("Find Trinagle:\t\t\t", end="")
+    if (testTriangles == findTriangles(testPolygon)):
+        print("PASS")
+    else:
+        print("FAIL")
+
 def test():
+    testPolygon = dict()
+    testPolygon["A"] = Vertex("A", "red",     {"B","C","D"})
+    testPolygon["B"] = Vertex("B", "blue",    {"A","D","E","F"})
+    testPolygon["C"] = Vertex("C", "yellow",  {"A","D","G"})
+    testPolygon["D"] = Vertex("D", "blank",   {"A","B","C","E"})
+    testPolygon["E"] = Vertex("E", "blank",   {"B","D","F","G","H"})
+    testPolygon["F"] = Vertex("F", "yellow",  {"B","E","H"})
+    testPolygon["G"] = Vertex("G", "red",     {"C","D","E","H"})
+    testPolygon["H"] = Vertex("H", "yellow",  {"G","E","F"})
+
     testVertexConstructors()
     print()
     testChangeColour()
+    print()
+    testFindTriangles(testPolygon)
 
 def main():
     polygon = dict()
