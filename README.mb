@@ -11,3 +11,34 @@ within the same border. That is out of scope for the challenge.
 
 Solution:
 ---------
+The solution works by finding candidates for the two proper triangles,
+then sees if it can colour the other triangles without making a third
+proper trinagle. If it cannot fill the polygon, there is no solution
+
+    generate trinagnles
+    for list of trinagles
+        find two possible proper triangles
+        try and fill the polygon without making more proper triangles
+        if polygon is filled
+            return solution exists
+    return no solutin
+
+Resources:
+----------
+Python3 Documentation
+
+The solution was implemented on Ubuntu using Python3 and the Atom text editor.
+
+Time:
+-----
+aproximately 15-16 hours to complete
+
+Instalation Inestructions:
+--------------------------
+Requires a python interprater.
+
+To run the solution navigate to the file and enter
+    python3 triangulatingPolygons.py
+
+To run the unit tests navigate to the file and enter
+    python3 triangulatingPolygons.py -t
