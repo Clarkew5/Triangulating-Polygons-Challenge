@@ -20,6 +20,36 @@ def findTriangles(polygon):
                     triangles.add(frozenset({vertex, connectedV, commonV}))
     return triangles
 
+def triangleCombinatiotns(uncolouredVerticies, colours, properTriangleList, properTriangle):
+    if (uncolouredVerticies == set()):
+        listTriangle = {}
+        for vertex in properTriangle:
+            listTriangle[vertex] = properTriangle[vertex]
+        properTriangleList.append(listTriangle)
+        return
+    else:
+        for vertex in uncolouredVerticies:
+            for colour in colours:
+                properTriangle[vertex] = colour
+                triangleCombinatiotns(uncolouredVerticies-{vertex}, colours-{colour}, properTriangleList, properTriangle)
+
+def makeProperTriangles(triangle, polygon):
+    colours = {"red", "blue", "yellow"}
+    coloursUsed = set()
+    uncolouredVerticies = set()
+    properTriangle = {}
+    properTriangleList = []
+
+    for vertex in triangle:
+        if (polygon[vertex].colour != "blank"):
+            coloursUsed.add(polygon[vertex].colour)
+            properTriangle[vertex] = polygon[vertex].colour
+        else:
+            uncolouredVerticies.add(vertex)
+
+    triangleCombinatiotns(uncolouredVerticies, colours - coloursUsed, properTriangleList, properTriangle)
+    return properTriangleList
+
 def testVertexConstructors():
     print("Vertex Constuctor Tests")
 
@@ -84,6 +114,53 @@ def testFindTriangles(testPolygon):
     else:
         print("FAIL")
 
+def testMakeProperTriangles():
+    testTriangle = frozenset({"A","B","C"})
+    print("Make Trinagle Tesst:")
+    print("\tSingle Blank Vertex:\t", end="")
+    singleBlankPoly = dict()
+    singleBlankPoly["A"] = Vertex("A", "red",   {"B","C"})
+    singleBlankPoly["B"] = Vertex("B", "blue",  {"A","C"})
+    singleBlankPoly["C"] = Vertex("C", "blank", {"A","B"})
+    singleBlankSol = [{"A":"red", "B":"blue", "C":"yellow"}]
+    singleBlankTest = makeProperTriangles(testTriangle, singleBlankPoly)
+    if(singleBlankTest == singleBlankSol):
+        print("PASS")
+    else:
+        print("FAIL")
+
+    print("\tTwo Blank Vertex:\t", end="")
+    twoBlankPoly = dict()
+    twoBlankPoly["A"] = Vertex("A", "red",   {"B","C"})
+    twoBlankPoly["B"] = Vertex("B", "blank",  {"A","C"})
+    twoBlankPoly["C"] = Vertex("C", "blank", {"A","B"})
+    twoBlankSol = [{"A":"red", "B":"blue",   "C":"yellow"},\
+                   {"A":"red", "B":"yellow", "C":"blue"  }]
+    twoBlankTest = makeProperTriangles(testTriangle, twoBlankPoly)
+    for dictionarySol in twoBlankSol:
+        if (not (dictionarySol in twoBlankTest)):
+            print("FAIL")
+            return
+    print("PASS")
+
+    print("\tThree Blank Vertex:\t", end="")
+    threeBlankPoly = dict()
+    threeBlankPoly["A"] = Vertex("A", "blank", {"B","C"})
+    threeBlankPoly["B"] = Vertex("B", "blank", {"A","C"})
+    threeBlankPoly["C"] = Vertex("C", "blank", {"A","B"})
+    threeBlankSol = [{"A":"red",    "B":"blue",     "C":"yellow"},\
+                     {"A":"red",    "B":"yellow",   "C":"blue"  },\
+                     {"A":"blue",   "B":"red",      "C":"yellow"},\
+                     {"A":"blue",   "B":"yellow",   "C":"red"   },\
+                     {"A":"yellow", "B":"red",      "C":"blue"  },\
+                     {"A":"yellow", "B":"blue",     "C":"red"   }]
+    threeBlankTest = makeProperTriangles(testTriangle, threeBlankPoly)
+    for dictionarySol in threeBlankSol:
+        if (not (dictionarySol in threeBlankTest)):
+            print("FAIL")
+            return
+    print("PASS")
+
 def test():
     testPolygon = dict()
     testPolygon["A"] = Vertex("A", "red",     {"B","C","D"})
@@ -100,6 +177,8 @@ def test():
     testChangeColour()
     print()
     testFindTriangles(testPolygon)
+    print()
+    testMakeProperTriangles()
 
 def main():
     polygon = dict()
@@ -129,13 +208,13 @@ def main():
     triangleSet = findTriangles(polygon)
     triangleList = list(triangleSet)
     for i in range(len(triangleList)):
-        properTrianglesList1 = makeProperTriangles(triangleList[i])
+        properTrianglesList1 = makeProperTriangles(triangleList[i], polygon)
         if (properTrianglesList1 == []):
             continue
         for pTri1 in properTrianglesList1:
             for j in range(i+1, len(triangleList)):
-                properTrianglesList2 = makeProperTriangles(triangleList[j])
-                if (properTrianglesList2 == [])
+                properTrianglesList2 = makeProperTriangles(triangleList[j], polygon)
+                if (properTrianglesList2 == []):
                     break
                 otherTriangles = triangleSet-(triangleList[i] | triangleList[j])
                 for pTri2 in properTrianglesList2:
