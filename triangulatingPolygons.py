@@ -84,7 +84,8 @@ def fillPolygon(pTri1, pTri2, otherTris, polygon):
             copyPolygon[vertex].colour = pTri1[vertex]
 
     for vertex in pTri2:
-        copyPolygon[vertex].colour = pTri2[vertex]
+        if (copyPolygon[vertex].colour == "blank"):
+            copyPolygon[vertex].colour = pTri2[vertex]
 
     return fillTriangles(otherTris, copyPolygon)
 
