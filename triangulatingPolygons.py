@@ -126,6 +126,27 @@ def main():
     polygon["U"] = Vertex("U", "blue",      {"Q","R","S","V"})
     polygon["V"] = Vertex("V", "red",       {"Q","R","T","U"})
 
+    triangleSet = findTriangles(polygon)
+    triangleList = list(triangleSet)
+    for i in range(len(triangleList)):
+        properTrianglesList1 = makeProperTriangles(triangleList[i])
+        if (properTrianglesList1 == []):
+            continue
+        for pTri1 in properTrianglesList1:
+            for j in range(i+1, len(triangleList)):
+                properTrianglesList2 = makeProperTriangles(triangleList[j])
+                if (properTrianglesList2 == [])
+                    break
+                otherTriangles = triangleSet-(triangleList[i] | triangleList[j])
+                for pTri2 in properTrianglesList2:
+                    if triangleConflict(pTri1, pTri2):
+                        break
+                    if (not fillPolygon(pTri1, pTri2, otherTris, polygon)):
+                        break
+                    else:
+                        print("Solution found")
+    print("No solution possible")
+
 if (__name__ == "__main__"):
     if (len(sys.argv) == 2 and sys.argv[1] == '-t'):
         test()
