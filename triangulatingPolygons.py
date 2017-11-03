@@ -50,6 +50,13 @@ def makeProperTriangles(triangle, polygon):
     triangleCombinatiotns(uncolouredVerticies, colours - coloursUsed, properTriangleList, properTriangle)
     return properTriangleList
 
+def triangleConflict(triangle1, triangle2):
+    for vertex in triangle1:
+        if (vertex in triangle2):
+            if (triangle1[vertex] != triangle2[vertex]):
+                return True
+    return False
+
 def testVertexConstructors():
     print("Vertex Constuctor Tests")
 
@@ -161,6 +168,16 @@ def testMakeProperTriangles():
             return
     print("PASS")
 
+def testTriangleConflict():
+    print("Triangle Conflict:\t\t", end="")
+    t1 = {"A":"red",  "B":"blue",   "C":"yellow"}
+    t2 = {"A":"blue", "D":"red",    "E":"yellow"}
+    t3 = {"A":"red",  "F":"yellow", "G":"blue"}
+    if (triangleConflict(t1, t2) and not triangleConflict(t1, t3)):
+        print("PASS")
+    else:
+        print("FAIL")
+
 def test():
     testPolygon = dict()
     testPolygon["A"] = Vertex("A", "red",     {"B","C","D"})
@@ -179,6 +196,8 @@ def test():
     testFindTriangles(testPolygon)
     print()
     testMakeProperTriangles()
+    print()
+    testTriangleConflict()
 
 def main():
     polygon = dict()
