@@ -1,5 +1,6 @@
 import sys
 
+#vertex class is used to build the poplygon and its triangles
 class Vertex:
     def __init__(self, name="", colour="blank", connectedVertices=set()):
         self.name = name
@@ -9,6 +10,7 @@ class Vertex:
     def changeColour(self, colour):
         self.colour = colour
 
+#helper functions used in main solution
 def findTriangles(polygon):
     triangles = set()
     for vertex in polygon:
@@ -56,6 +58,7 @@ def makeProperTriangles(triangle, polygon):
 
 def fillTriangles(triangles, polygon):
     if (triangles == set()):
+        #base case, all triangles are  filled
         return True
     else:
         for trinagle in triangles:
@@ -67,6 +70,7 @@ def fillTriangles(triangles, polygon):
                 else:
                     uncolouredVerticies.add(vertex)
             if (len(coloursUsed) == 3):
+            #if all three colours then a third proper triangle was found
                 return False
             for vertex in uncolouredVerticies:
                 for colour in coloursUsed:
@@ -100,6 +104,7 @@ def triangleConflict(triangle1, triangle2):
                 return True
     return False
 
+#Tests of helper functions
 def testVertexConstructors():
     print("Vertex Constuctor Tests")
 
@@ -221,6 +226,7 @@ def testTriangleConflict():
     else:
         print("FAIL")
 
+#main test function
 def test():
     testPolygon = dict()
     testPolygon["A"] = Vertex("A", "red",     {"B","C","D"})
@@ -242,7 +248,9 @@ def test():
     print()
     testTriangleConflict()
 
+#main function
 def main():
+    #representaion of the poplygon
     polygon = dict()
     polygon["A"] = Vertex("A", "red",       {"B","E","F"})
     polygon["B"] = Vertex("B", "red",       {"A","C","F","G"})
@@ -266,6 +274,10 @@ def main():
     polygon["T"] = Vertex("T", "red",       {"K","R","S","V"})
     polygon["U"] = Vertex("U", "blue",      {"Q","R","S","V"})
     polygon["V"] = Vertex("V", "red",       {"Q","R","T","U"})
+
+    #the solution works by finding candidates for the two proper triangles,
+    #then sees if it can colour the other triangles without making a third
+    #proper trinagle
 
     triangleSet = findTriangles(polygon)
     triangleList = list(triangleSet)
