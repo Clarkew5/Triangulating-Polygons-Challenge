@@ -13,15 +13,15 @@ Solution:
 ---------
 The solution works by finding candidates for the two proper triangles,
 then sees if it can colour the other triangles without making a third
-proper trinagle. If it cannot fill the polygon, there is no solution
+proper triangle. If it cannot fill the polygon, there is no solution
 
-    generate trinagnles
-    for list of trinagles
+    generate triangles
+    for list of triangles
         find two possible proper triangles
         try and fill the polygon without making more proper triangles
         if polygon is filled
             return solution exists
-    return no solutin
+    return no solution
 
 Resources:
 ----------
@@ -31,11 +31,11 @@ The solution was implemented on Ubuntu using Python3 and the Atom text editor.
 
 Time:
 -----
-aproximately 15-16 hours to complete
+approximately 15-16 hours to complete
 
-Instalation Inestructions:
+Instalation Instructions:
 --------------------------
-Requires a python interprater.
+Requires a python interpreter.
 
 To run the solution navigate to the file and enter
     python3 triangulatingPolygons.py
@@ -45,7 +45,7 @@ To run the unit tests navigate to the file and enter
 
 Regrets:
 --------
-I wish that I requsetd a little more time so that I could have tested more
+I wish that I had requested a little more time so that I could have tested more
 and generated more puzzles to properly test my solution. If I had more time
 or could start over, I would look into applying constraint value problem 
 techniques, because I believe that this challenge can be classified as a 
